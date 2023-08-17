@@ -37,4 +37,23 @@ export const searchMovies = (query, value) => {
   };
 
 
-// poster_path, id, title, popularity, overview, genre_ids
+  export const getCast = (movieId) => {
+    return fetch(`${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}`)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Network response was not ok.');
+      });
+  };
+
+  
+  export const getReview = (movieId) => {
+    return fetch(`${BASE_URL}/movie/${movieId}/reviews?api_key=${API_KEY}`)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Network response was not ok.');
+      });
+  }

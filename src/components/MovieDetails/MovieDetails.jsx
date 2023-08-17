@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { getMovieById } from '../../services/api.services';
-import { useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import CastDetails from 'components/CastDetails/CastDetails';
+import ReviewsDetails from 'components/ReviewsDetails/ReviewsDetails';
 
 function MovieDetails() {
   const { movieId } = useParams();
   const [movieData, setMovieData] = useState('');
+  const defaultImg = 'https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/image;s=1000x700';
 
+ const location = useLocation()
+ const backLink = location.state?.from ?? '/';
 
   useEffect(() => {
     const fetchMovieData = async () => {
@@ -20,16 +25,24 @@ function MovieDetails() {
     fetchMovieData();
   }, [movieId]);
 
+ 
+
   return (
     <>
+    <Link to={backLink}>Back</Link>
       <img
-        src={`https://image.tmdb.org/t/p/w300/${movieData.poster_path}`}
+        src={
+ movieData.poster_path ?
+ `https://image.tmdb.org/t/p/w500/${movieData.poster_path}`
+ : defaultImg
+}
+width={250}
         alt=""
       />
       <h2>{movieData.title}</h2>
       <p>{movieData.popularity}</p>
       <h3>Overview</h3>
-      <p>{movieData.overview}</p>
+      <p>User Score {movieData.vote_average}%</p>
       <h3>Genres</h3>
       {movieData && (
         <ul>
@@ -38,6 +51,14 @@ function MovieDetails() {
           ))}
         </ul>
       )}
+
+      <h3>Additional information</h3>
+      <Link to={`/movies/${movieId}/cast`}>
+     <CastDetails />
+        </Link>
+      <Link>
+      <ReviewsDetails />
+      </Link>
     </>
   );
 }
