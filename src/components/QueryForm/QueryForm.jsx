@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
 
-function QueryForm({ onSubmit }) {
+import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
+function QueryForm() {
   const [value, setValue] = useState('');
 
   const handleChange = ({ target }) => {
     setValue(target.value);
   };
+  const [setSearchParams] = useSearchParams();
 
   const handleSubmit = e => {
     e.preventDefault();
-    onSubmit(value);
+    setSearchParams({query: value})
     setValue('');
   };
 

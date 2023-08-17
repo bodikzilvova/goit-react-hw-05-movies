@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import QueryForm from '../components/QueryForm/QueryForm';
 import MovieList from '../components/MovieList/MovieList';
 import { searchMovies } from '../services/api.services';
@@ -7,23 +8,26 @@ import { searchMovies } from '../services/api.services';
 function FindMoviePage() {
   const [searchResults, setSearchResults] = useState([]);
 
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams(); 
+  const [searchParams] = useSearchParams();
 
-  const handleSubmit = async value => {
+  const handleSetMovies = async value => {
     const response = await searchMovies(value);
-    setSearchResults(response.results);
+    setSearchResults(response?.results);
+  }
 
-    searchParams.set('query', value);
-    navigate(`/movies/query/${value}`);
-  };
+  useEffect(()=>{
+    const searchValue = searchParams.get('query')
+    if(searchValue)
+      handleSetMovies(searchValue).catch(console.error)
+  }, [searchParams])
 
   return (
     <>
-      <QueryForm onSubmit={handleSubmit} />
+      <QueryForm/>
       <MovieList movies={searchResults} />
     </>
   );
 }
 
 export default FindMoviePage;
+
