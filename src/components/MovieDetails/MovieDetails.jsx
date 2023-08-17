@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getMovieById } from '../../services/api.services';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import CastDetails from 'components/CastDetails/CastDetails';
@@ -10,7 +10,7 @@ function MovieDetails() {
   const defaultImg = 'https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/image;s=1000x700';
 
  const location = useLocation()
- const backLink = location.state?.from ?? '/';
+ const backLink = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     const fetchMovieData = async () => {
@@ -29,7 +29,7 @@ function MovieDetails() {
 
   return (
     <>
-    <Link to={backLink}>Back</Link>
+    <Link to={backLink.current}>Back</Link>
       <img
         src={
  movieData.poster_path ?
