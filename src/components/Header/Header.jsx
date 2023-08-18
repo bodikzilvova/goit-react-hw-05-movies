@@ -1,12 +1,15 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { BtnHome, BtnMovies, HeaderContainer, Sticky } from './Header.styled';
+
 
 const Header = () => {
   return (
-    <>
-      <NavLink to="/">Home</NavLink>
-      <NavLink to="/movies">Movies</NavLink>
-    </>
+    <Sticky>
+    <HeaderContainer>
+      <BtnHome to="/">Home</BtnHome>
+      <BtnMovies to="/movies">Movies</BtnMovies>
+    </HeaderContainer>
+    </Sticky>
   );
 };
 

@@ -5,18 +5,21 @@ import Homepage from 'pages/Homepage';
 import MovieDetails from './MovieDetails/MovieDetails';
 import CastDetails from './CastDetails/CastDetails';
 import ReviewsDetails from './ReviewsDetails/ReviewsDetails';
+import Container from './Container/Container';
 
 export const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Homepage />} />
-        <Route path="movies" element={<FindMoviePage />} /> 
-        <Route path="/movies/:movieId" element={<MovieDetails />}>   
-         <Route path="/movies/:movieId/cast" element={CastDetails} />
-        <Route path="/movies/:movieId/reviews" element={ReviewsDetails} />  
+    <Container>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Homepage />} />
+          <Route path="movies" element={<FindMoviePage />} />
+          <Route path="/movies/:movieId" element={<MovieDetails />} >
+            <Route path="cast" element={<CastDetails />} />
+            <Route path="reviews" element={<ReviewsDetails />} />
+          </Route>
         </Route>
-      </Route>
-    </Routes>
+      </Routes>
+    </Container>
   );
 };

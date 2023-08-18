@@ -1,6 +1,6 @@
-
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { BtnSearch, Form, QueryInput } from './QueryForm.styled';
 
 function QueryForm() {
   const [value, setValue] = useState('');
@@ -8,25 +8,25 @@ function QueryForm() {
   const handleChange = ({ target }) => {
     setValue(target.value);
   };
-  const [setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
 
   const handleSubmit = e => {
     e.preventDefault();
-    setSearchParams({query: value})
+    setSearchParams({ query: value });
     setValue('');
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
+    <Form onSubmit={handleSubmit}>
+      <QueryInput
         value={value}
         type="text"
         onChange={handleChange}
         autoComplete="off"
         autoFocus
       />
-      <button type="submit">Search</button>
-    </form>
+      <BtnSearch type="submit">Search</BtnSearch>
+    </Form>
   );
 }
 
