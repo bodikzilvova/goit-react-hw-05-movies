@@ -8,7 +8,9 @@ function MovieList({ movies }) {
     <>
       {movies.map(movie => (
         <List key={movie.id}>
-          <Films to={`/movies/${movie.id}`} state={{ from: location }}>{movie.title}</Films>
+          <Films to={`/movies/${movie.id}`} state={{ from: location }}>
+            {movie.title}
+          </Films>
         </List>
       ))}
     </>

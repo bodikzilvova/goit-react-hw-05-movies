@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { BtnSearch, Form, QueryInput } from './QueryForm.styled';
 
-function QueryForm() {
+function QueryForm({ setSearchParams }) {
   const [value, setValue] = useState('');
 
   const handleChange = ({ target }) => {
     setValue(target.value);
   };
-  const [, setSearchParams] = useSearchParams();
 
   const handleSubmit = e => {
     e.preventDefault();
+    if (!value) {
+      return alert('Введіть назву фільму для пошуку');
+    }
     setSearchParams({ query: value });
     setValue('');
   };

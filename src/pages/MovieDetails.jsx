@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getMovieById } from '../../services/api.services';
+import { getMovieById } from '../services/api.services';
 import { useLocation, useParams, Link, Outlet } from 'react-router-dom';
 import {
   BtnBack,
@@ -13,11 +13,11 @@ import {
   AddInfoTitle,
   CastLink,
   ReviewLink,
-} from './MovieDetails.styled';
+} from '../components/MovieDetails/MovieDetails.styled';
 
 function MovieDetails() {
   const { movieId } = useParams();
-  const [movieData, setMovieData] = useState('');
+  const [movieData, setMovieData] = useState(null);
   const defaultImg =
     'https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/image;s=1000x700';
 
@@ -36,6 +36,10 @@ function MovieDetails() {
 
     fetchMovieData();
   }, [movieId]);
+
+  if (!movieData) {
+    return;
+  }
 
   return (
     <>

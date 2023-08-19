@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getCast } from '../../services/api.services';
-import { ActorName, ActorRole, CastList } from './CastDetails.styled';
+import { ActorName, ActorRole, CastList, NoCast } from './CastDetails.styled';
 
 function CastDetails() {
   const { movieId } = useParams();
@@ -24,22 +24,26 @@ function CastDetails() {
 
   return (
     <>
-      <CastList>
-        {cast.map(({ cast_id, character, original_name, profile_path }) => (
-          <li key={cast_id}>
-            <img
-              src={
-                profile_path
-                  ? `https://image.tmdb.org/t/p/w200/${profile_path}`
-                  : defaultImg
-              }
-              alt=""
-            />
-            <ActorName>{original_name}</ActorName>
-            <ActorRole>{character}</ActorRole>
-          </li>
-        ))}
-      </CastList>
+      {cast.length > 0 ? (
+        <CastList>
+          {cast.map(({ cast_id, character, original_name, profile_path }) => (
+            <li key={cast_id}>
+              <img
+                src={
+                  profile_path
+                    ? `https://image.tmdb.org/t/p/w200/${profile_path}`
+                    : defaultImg
+                }
+                alt=""
+              />
+              <ActorName>{original_name}</ActorName>
+              <ActorRole>{character}</ActorRole>
+            </li>
+          ))}
+        </CastList>
+      ) : (
+        <NoCast>Sorry no information about cast.</NoCast>
+      )}
     </>
   );
 }

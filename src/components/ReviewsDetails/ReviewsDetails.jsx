@@ -1,14 +1,18 @@
-
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getReview } from '../../services/api.services'
-import { ReviewsContainer, ReviewsAuthor, ReviewsText } from './ReviewsDetails.styled';
+import { getReview } from '../../services/api.services';
+import {
+  ReviewsContainer,
+  ReviewsAuthor,
+  ReviewsText,
+  NoReview,
+} from './ReviewsDetails.styled';
 
 function ReviewsDetails() {
-    const { movieId } = useParams();
-const [review, setReview] = useState([]);
+  const { movieId } = useParams();
+  const [review, setReview] = useState([]);
 
-useEffect(() => {
+  useEffect(() => {
     const fetchReview = async () => {
       try {
         const data = await getReview(movieId);
@@ -21,20 +25,21 @@ useEffect(() => {
     fetchReview();
   }, [movieId]);
 
-
-
   return (
     <>
-        <div>
-          {review.map(({ author, content }) => (
+      <div>
+        {review.length > 0 ? (
+          review.map(({ author, content }) => (
             <ReviewsContainer key={author}>
               <ReviewsAuthor>Author: {author}</ReviewsAuthor>
               <ReviewsText>{content}</ReviewsText>
             </ReviewsContainer>
-          ))}
-        </div>
+          ))
+        ) : (
+          <NoReview>Sorry we do not have reviews.</NoReview>
+        )}
+      </div>
     </>
   );
 }
-
-export default ReviewsDetails
+export default ReviewsDetails;
